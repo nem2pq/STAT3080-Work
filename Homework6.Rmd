@@ -1,0 +1,77 @@
+---
+title: "Homework 6" 
+author: "Noah McIntire"
+fontsize: 12pt
+geometry: margin=1in
+urlcolor: black
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, highlight=FALSE)
+```
+
+## Problem 1   
+### a)
+```{r}
+library(ggplot2)
+crash<-read.txt("/Users/noahmcintire/Desktop/STAT 3080/nym2019.txt")
+
+```
+
+### b)
+```{r}
+
+```
+
+### c)
+```{r}
+
+```
+
+### d)
+```{r}
+
+```
+
+### e)
+```{r}
+
+```
+
+### f)
+```{r}
+
+```
+
+### g)
+```{r}
+
+```
+
+## Problem 2   
+```{r}
+
+```
+
+## Problem 3   
+```{r}
+
+```
+
+## Problem 4   
+```{r}
+
+```
+
+## Problem 5   
+```{r}
+
+```
+
+## Problem 6
+
+
+
+## References
+1. Your resources go here. Links should be surrounded by <>.

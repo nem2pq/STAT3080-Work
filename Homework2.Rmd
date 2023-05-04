@@ -1,0 +1,200 @@
+---
+title: "Homework 2" 
+author: "Noah McIntire"
+fontsize: 12pt
+geometry: margin=1in
+urlcolor: black
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, highlight=FALSE)
+```
+
+## Problem 1  
+### a
+```{r}
+commutes <- matrix(c(25,22,36,23,21,36,34,33,25,32), nrow=5, ncol=2, byrow=TRUE)
+commutes
+```
+### b
+```{r}
+rownames(commutes) <- c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")
+colnames(commutes) <- c("Week1", "Week2")
+commutes
+```
+\newpage
+### c
+On Monday, Tuesday, and Thursday she arrived faster when leaving at 8:30am. On Wednesday and Friday she arrived faster when leaving at 8:30am. 
+### d
+```{r}
+avg_time<-apply(commutes, 1,mean)
+avg_time
+```
+
+### e
+```{r}
+diff <- commutes -27
+diff
+```
+
+
+### f
+
+```{r}
+avg_diff<-apply(diff, 2,mean)
+avg_diff
+```
+
+### g
+
+```{r}
+max_delay<-apply(diff, 2,max)
+max_delay
+```
+
+
+### h
+
+```{r}
+Under_half<- commutes[commutes[,"Week2"] > 30,]
+Under_half<-Under_half[,2]
+Under_half<-names(Under_half)
+Under_half
+```
+
+### i
+She arrived within her budgeted window on Monday, Wednesday, and Friday during the first week, and arrived within her window on Monday and Tuesday of the second week.
+
+### J
+
+```{r}
+## She arrived fastest on Wednesday during the first week, which is the third row
+fast<- rownames(commutes)
+fast=fast[3]
+fast
+```
+
+### k
+
+```{r}
+diff_sub <- diff[c(1,4),]
+diff_sub
+```
+
+\newpage
+## Problem 2
+
+### a
+```{r}
+library("car")
+require("car")
+weight.metric <-Davis[,c(2,4)]
+head(weight.metric)
+```
+
+### b
+
+```{r}
+weight.imp <- weight.metric * 2.2
+head(weight.imp)
+```
+
+### c
+
+```{r}
+height.metric <- Davis[,c(3,5)]
+head(height.metric)
+```
+
+### d
+
+```{r}
+height.imp <- round(height.metric /2.54, 1)
+head(height.imp)
+```
+
+### e
+
+```{r}
+Davis.imp <- data.frame(Davis$sex, weight.imp, height.imp )
+colnames(Davis.imp)<- c("sex", "rec.weight",
+"rep.weight", "rec.height", "rep.height")
+head(Davis.imp)
+```
+
+### f
+
+```{r}
+summary(Davis.imp)
+```
+There are 34 total NA values.
+
+### g
+
+```{r}
+# From https://discuss.analyticsvidhya.com/t/how-to-count-the-missing-value-in-r/2949/5
+rowSums(is.na(Davis.imp))
+```
+There are 19 rows with values missing.
+
+### h
+
+```{r}
+#From: https://stackoverflow.com/questions/7980622/subset-of-rows-containing-na-missing-values-in-a-chosen-column-of-a-data-frame
+sex_subset <- Davis.imp[rowSums(is.na(Davis.imp)) > 0,]
+sex_subset <- sex_subset$sex
+sex_subset
+```
+\newpage
+## Problem 3
+
+### a
+
+```{r}
+name<- c("Mercury","Venus","Earth","Mars","Jupiter","Saturn","Uranus","Neptune")
+distance<-c(0.39,0.72,1,1.52,5.2,9.54,19.18,30.06)
+type<-c("terrestrial","terrestrial","terrestrial","terrestrial","gas","gas","gas","gas")
+diameter<-c(0.382,0.949,1,0.532,11.209,9.449,4.007,3.883)
+rotation<-c(58.64,-243.02,1,1.03,0.41,0.43,-0.72,0.67)
+rings<-c(F,F,F,F,T,T,T,T)
+moons<-c(0,0,1,2,79,53,27,14)
+solar_system<-data.frame(name, distance,
+type, diameter, rotation, rings, moons)
+solar_system
+```
+
+### b
+
+```{r}
+dia_l5<-solar_system[which(solar_system["diameter"] < 5),]
+dia_l5
+```
+
+### c
+
+```{r}
+neg_rot<-solar_system[which(solar_system["rotation"] < 0),]
+neg_rot$distance
+```
+
+### d
+
+```{r}
+dia_great<-solar_system[which(solar_system["diameter"] > 1),]
+dia_great<-dia_great[,c(1,6,3)]
+dia_great
+```
+
+### e
+
+```{r}
+moons_2<-solar_system[which(solar_system["moons"] > 1),]
+moons_2<-moons_2[,c(6,2)]
+moons_2
+```
+
+## References
+1. <https://www.statmethods.net/input/missingdata.html>
+2. <https://discuss.analyticsvidhya.com/t/how-to-count-the-missing-value-in-r/2949/5>
+3. <https://stackoverflow.com/questions/7980622/subset-of-rows-containing-na-missing-values-in-a-chosen-column-of-a-data-frame>

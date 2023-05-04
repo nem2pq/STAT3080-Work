@@ -1,0 +1,34 @@
+---
+title: "Project Part 1" 
+fontsize: 12pt
+geometry: margin=1in
+urlcolor: black
+output: pdf_document
+header-includes:
+- \usepackage{setspace}
+- \onehalfspacing
+---
+
+## Introduction
+Workplace injuries are an everyday occurrence. According to the National Safety Council, the top three causes of workplace injuries leading to extended time away from work include overexertion, falls, slips, and trips, and contact with objects and/or equipment. I am interested in finding any sort of relationship to workplace injuries or deaths, anything from business size to the type of business conducted at each location. Here in the US, OSHA maintains data on workplace injuries that cause anything from a scrape to something that is life threatening. This can provide a valuable insight into what dangers and injuries are prevalent in the American private sector.
+
+## Research Questions
+Three Research Questions for this topic of interest include:
+\newline
+1. Is there any industry or subset of industry that is most prone to serious or fatal workplace injuries?
+\newline
+2. Are there workplaces that have minimized/ caused more injuries in the past few years?
+\newline
+3. Are there any trends amongst differing types of workplace injuries? For example, are injuries that require amputation more common in construction jobs or warehouse jobs?
+
+## Population of Interest and further data explanation
+The population of interest in this data set is the private sector of the American labor force. This is where most data can be found on workplace injuries, and can be used to study more about what advances have been occurring.
+Appropriate data for this can be found at OSHA's Website, as it contains several different useful data sets that contain both descriptive and numerical statistics about workplace injuries. This includes both hours worked at each workplace, amount of injuries, types of injuries (posoinings, respiratory conditions, skin disorders, and more), the establishment time, and the date of the injury. While the OSHA data sets are not a random sample into all sections of the private sector, they can still be used to create some valid insights to workplace injuries and find patterns among them.  
+\newline
+
+
+\newpage
+## References
+1. <https://www.osha.gov/severeinjury/>
+2. <https://injuryfacts.nsc.org/work/work-overview/top-work-related-injury-causes/>
+3. <https://www.osha.gov/Establishment-Specific-Injury-and-Illness-Data>

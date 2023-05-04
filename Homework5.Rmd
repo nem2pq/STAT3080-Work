@@ -1,0 +1,122 @@
+---
+title: "Homework 5" 
+author: "Noah McIntire"
+fontsize: 12pt
+geometry: margin=1in
+urlcolor: black
+output: pdf_document
+---
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, highlight=FALSE)
+```
+
+## Problem 1 
+### a)
+```{r}
+library(ggplot2)
+crash<-read.csv("/Users/noahmcintire/Desktop/STAT 3080/state crashes.csv")
+plot1<-ggplot(crash, aes(x=Licensed.drivers, y=Fatal.crashes)) + geom_point(shape=8)
+plot1
+```
+\newpage
+
+### b)
+```{r}
+crash$Hand.held.ban<- as.factor(crash$Hand.held.ban)
+plot2<-ggplot(crash, aes(x=Licensed.drivers, y=Fatal.crashes, color=Hand.held.ban)) + geom_point(shape=8) +  scale_color_manual(values=c("1"="blue","2"="orange","3"="dark grey"))
+plot2
+```
+
+\newpage
+### c)
+```{r}
+plot3<- plot2 + geom_smooth(se = F)
+plot3
+```
+\newpage
+
+### d)
+```{r}
+plot4<- plot2 + geom_smooth(method=lm,se = F)
+plot4
+```
+\newpage
+
+### e)
+```{r}
+plot5 <-ggplot(crash, aes(x=Licensed.drivers, y=Fatal.crashes, color=Hand.held.ban)) + geom_point(shape=8) + geom_smooth(method=lm,alpha =0.2, aes(fill=Hand.held.ban)) + scale_color_manual(values=c("1"="blue","2"="orange","3"="dark grey"), aesthetics = c("color", "fill")) 
+plot5
+```
+
+\newpage
+
+### f)
+```{r}
+plot6 <-plot5 + geom_smooth(method=lm, color="brown", se=F)
+plot6
+```
+
+### g)
+
+Based on the graph, we can see that there is a strong, positive, linear relationship between the number of fatal accidents and the number of licensed drivers in each state. We also can say that having a hand held electronic device ban will likely cause a decrease the amount of fatal accidents within the state. However, an image does not provide any form of statistical significance, but instead helps to provide a useful visualization.
+
+\newpage
+
+## Problem 2
+
+### a)
+```{r}
+fatal<-read.csv("/Users/noahmcintire/Desktop/STAT 3080/fatalities.csv")
+plot7<- ggplot(fatal, aes(x=Year, y=Fatalities, color=State)) + geom_line()
+plot7
+```
+
+### b)
+Looking at the whole graph, it seems that the number of fatalities in each state has gone down over time. Additionally, each state's population is reflected in the graph, as the state with the largest population has the most fatalities, while the states that are smaller have less and less road fatalities as the population decreases.
+
+\newpage
+
+### c)
+```{r}
+plot8<-plot7 + geom_point()
+plot8
+```
+
+### d)
+The plot in part c allows us to see each point of data that was recorded, making it easier to visualize what happened between each year and compare individual years among each state. 
+
+\newpage
+
+### e)
+```{r}
+plot9<-ggplot(fatal, aes(x=Year, y=Fatalities/(Registered.Vehicles *1000), color=State )) + geom_line() + geom_point()
+plot9
+```
+
+### f)
+By including the number of registered vehicles within the ratio, we are able to more easily compare each state's rate of fatalities. This still supports my previous statement in part b that all fatalities in car accidents have fallen in each state, especially in proportion to number of vehicles registered. Hoever, we can see that certain states have improved much more drastically in comparison to number of registered vehicles, such as DC and West Virginia.
+
+\newpage
+
+### g)
+```{r}
+plot10<-ggplot(fatal, aes(x=Year, y=Fatalities/(Vehicle.Miles *10^9), color=State )) + geom_line() + geom_point()
+plot10
+```
+
+### h)
+One of the biggest differences by using miles instead of registered vehicles is that we can see that West Virginia has much more fatalities per mile driven then other states throughout most of the graph. 
+
+\newpage
+
+### i)
+```{r}
+plot11<-ggplot(fatal, aes(x=Year, y=Fatalities, color=State, shape=State)) + geom_line() + geom_point()
+plot11
+```
+
+### j)
+Varying the point by state provided does not provide any significant benefit in communicating the information. Because each color distinguishes each state, and that both the line and point have the same color, there is no need to change the shape. It makes the graphic look less consistent and less appealing to the eye.

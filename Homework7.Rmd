@@ -1,0 +1,194 @@
+---
+title: "Homework 7" 
+author: "Noah McIntire"
+fontsize: 12pt
+geometry: margin=1in
+urlcolor: black
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, highlight=FALSE)
+```
+
+## Problem 1  
+```{r}
+library(ggplot2)
+set.seed(07312001)
+Xdata2 <- data.frame(X=c(0,20))
+ggplot(Xdata2, aes(x=X)) + stat_function(fun=dchisq, args=list(df=3))
+```
+The shape of the curve is right skewed with one peak, with a center around 2.
+
+## Problem 2
+### a)
+```{r}
+ztest <- function(x){
+  samples <- replicate(10000,rchisq(x,3))
+  xbar<- apply(samples,2, mean)
+  zstat <- (xbar - 3 )/(2.45/sqrt(x))
+  pvalue <- pnorm(-abs(zstat))
+  reject_null <- (pvalue < 0.025)
+  sum(reject_null)/10000
+}
+sizes<-c(9,27,51)
+samp.means <- sapply(sizes, ztest)
+samp.means
+```
+
+### b)
+```{r}
+lztest <- function(x){
+  samples <- replicate(10000,rchisq(x,3))
+  xbar<- apply(samples,2, mean)
+  zstat <- (xbar - 3 )/(2.45/sqrt(x))
+  pvalue <- pnorm(zstat)
+  reject_null <- pvalue < 0.05
+  sum(reject_null)/10000
+}
+
+samp.means1 <- sapply(sizes, lztest)
+samp.means1
+```
+
+\newpage
+### c)
+```{r}
+rztest <- function(x){
+  samples <- replicate(10000,rchisq(x,3))
+  xbar<- apply(samples,2, mean)
+  zstat <- (xbar - 3 )/(2.45/sqrt(x))
+  pvalue <- pnorm(zstat, lower.tail=F)
+  reject_null <- (pvalue < 0.05)
+  sum(reject_null)/10000
+}
+samp.means2 <- sapply(sizes, rztest)
+samp.means2
+```
+
+## Problem 3
+```{r}
+df<-data.frame(sizes, samp.means, samp.means1, samp.means2)
+colnames(df) <- c("Sample Size", "Two-sided", "Left-sided", "Right-sided")
+df
+```
+Using the empirical time one error from each of our z-test, we can see that as the sample sizes increases within each simulation, the probability of reject of the null hypothesis when it is true comes closer and closer to our assumed significance level of 0.05.The trend also demonstrates an important assumption made when performing a z-test, that we are using an adequate sample size.
+
+\newpage
+## Problem 4
+### a)
+```{r}
+sizes<-c(9,27,51, 60, 70, 80, 90, 100)
+ttest <- function(x){
+  samples <- replicate(10000,rchisq(x,3))
+  xbar<- apply(samples,2, mean)
+  std<- apply(samples,2, sd)
+  tstat <- (xbar - 3 )/(sqrt((std^2)/x))
+  pvalue <- pnorm(-abs(tstat))
+  reject_null <- (pvalue < 0.025)
+  sum(reject_null)/10000
+}
+tsamp.means <- sapply(sizes, ttest)
+tsamp.means
+```
+
+### b)
+```{r}
+lttest <- function(x){
+  samples <- replicate(10000,rchisq(x,3))
+  xbar<- apply(samples,2, mean)
+  std<- apply(samples,2, sd)
+  tstat <- (xbar - 3 )/(sqrt((std^2)/x))
+  pvalue <- pnorm(tstat)
+  reject_null <- (pvalue < 0.05)
+  sum(reject_null)/10000
+}
+tsamp.means1 <- sapply(sizes, lttest)
+tsamp.means1
+```
+
+\newpage
+### c)
+```{r}
+rttest <- function(x){
+  samples <- replicate(10000,rchisq(x,3))
+  xbar<- apply(samples,2, mean)
+  std<- apply(samples,2, sd)
+  tstat <- (xbar - 3 )/(sqrt((std)^2/x))
+  pvalue <- pnorm(tstat, lower.tail = F)
+  reject_null <- (pvalue < 0.05)
+  sum(reject_null)/10000
+}
+
+tsamp.means2 <- sapply(sizes, rttest)
+tsamp.means2
+```
+
+
+## Problem 5
+```{r}
+df<-data.frame(sizes, tsamp.means, tsamp.means1, tsamp.means2)
+colnames(df) <- c("Sample Size", "Two-sided", "Left-sided", "Right-sided")
+df
+```
+The same trend that was seen from our z tests can be seen here: as the sample sizes increases (as well as degrees of freedom) within each simulation, the probability of reject of the null hypothesis when it is true comes closer and closer to our assumed significance level of 0.05. However, these are less accurate then the results shown in the table from problem 3. The trend above can also demonstrates an important assumption made when performing a t-test, that we are using an adequate sample size.
+
+
+\newpage
+## Problem 6
+### a)
+```{r}
+iztest <- function(x){
+  samples <- replicate(10000,rchisq(x,3))
+  xbar<- apply(samples,2, mean)
+  std<- apply(samples,2, sd)
+  zstat <- (xbar - 3 )/(std/sqrt(x))
+  pvalue <- pnorm(-abs(zstat))
+  reject_null <- (pvalue < 0.025)
+  sum(reject_null)/10000
+}
+
+isamp.means <- sapply(sizes, iztest)
+isamp.means
+```
+
+### b) Left is less than  or equal to
+```{r}
+ilztest <- function(x){
+  samples <- replicate(10000,rchisq(x,3))
+  xbar<- apply(samples,2, mean)
+  std<- apply(samples,2, sd)
+  zstat <- (xbar - 3 )/(std/sqrt(x))
+  pvalue <- pnorm(zstat)
+  reject_null <- (pvalue < 0.05)
+  sum(reject_null)/10000
+}
+isamp.means1 <- sapply(sizes, ilztest)
+isamp.means1
+```
+
+\newpage
+### c)
+```{r}
+irztest <- function(x){
+  samples <- replicate(10000,rchisq(x,3))
+  xbar<- apply(samples,2, mean)
+  std<- apply(samples,2, sd)
+  zstat <- (xbar - 3 )/(std/sqrt(x))
+  pvalue <- pnorm(zstat, lower.tail = F)
+  reject_null <- (pvalue  < 0.05)
+  sum(reject_null)/10000
+}
+isamp.means2 <- sapply(sizes, irztest)
+isamp.means2
+```
+
+## Problem 7
+```{r}
+df<-data.frame(sizes, isamp.means, isamp.means1, isamp.means2)
+colnames(df) <- c("Sample Size", "Two-sided", "Left-sided", "Right-sided")
+df
+```
+Because we are working with incorrectly performed z-tests, it would make sense that the results are less accurate then the correct z-tests performed in problem 3. However it still follows the trend that as the sample sizes increases within each simulation, the probability of reject of the null hypothesis when it is true comes closer and closer to our assumed significance level of 0.05.
+
+

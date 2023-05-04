@@ -1,0 +1,131 @@
+---
+title: "Homework 4" 
+author: "Noah McIntire"
+fontsize: 12pt
+geometry: margin=1in
+urlcolor: black
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, highlight=FALSE)
+library(tidyverse)
+```
+
+## Problem 1  
+### a)
+```{r}
+fatal<-read.csv("/Users/noahmcintire/Desktop/STAT 3080/fatal accidents.csv")
+head(fatal)
+```
+
+### b)
+```{r}
+datasub<-function(x){
+  x<-fatal[fatal$State==x,]
+  x
+}
+state.list<-lapply(unique(fatal$State),datasub)
+```
+
+\newpage
+### c)
+```{r}
+lapply(state.list, head, n=3)
+```
+
+### d)
+```{r}
+newtable <- function(x){
+  x1<-group_by(x, Day.of.week)
+  accident<- count(x1, name="num.acc")
+  sum.1<- sum(accident$num.acc)
+  perc<- summarize(accident, percentage.of.accidents= round((100*sum(num.acc)/sum.1), 1), )
+  perc
+}
+lapply(state.list, newtable)
+```
+
+### e)
+By viewing each state, we can see that in most cases, there is a higher percentage of accidents that occur on Fridays, Saturdays, and Sundays. 
+\newpage
+
+### f)
+```{r}
+newtable1 <- function(x){
+  x1<-group_by(x, Day.of.week)
+  accident<- count(x1, name="Total Number of Accidents")
+  accident
+  x2<-summarize(x1, Total.Vehicle= sum(Vehicle.count))
+  x3<-merge(accident, x2)
+  x3
+  # merge() comes from reference 3
+}
+lapply(state.list,newtable1)
+```
+
+### g)
+Being able to include all the states in one table, in which the state is used as a categorical variable, would allow the viewer to more easily assertain observations about the data. 
+
+
+\newpage
+## Problem 2
+
+### a)
+```{r}
+People.count<- fatal$People.count.IN + fatal$People.count.OUT
+fatal1<-mutate(fatal,People.count)
+head(fatal1,3)
+# mutate comes from reference 1 (dplyr)
+```
+
+### b)
+```{r}
+fatal1<-filter(fatal1, Year == 2019)
+fatal2<-group_by(fatal1, State)
+sum1<-summarise(fatal2, avgVehicle=mean(Vehicle.count), avgPeople=mean(People.count))
+sum1
+```
+
+\newpage
+
+### c)
+```{r}
+fatal3<-group_by(fatal1,State)
+
+sum2<-summarise(fatal3, minVehicle=min(Vehicle.count), avgVehicle=mean(Vehicle.count), maxVehicle=max(Vehicle.count))
+sum2
+```
+
+### d)
+In all 5 states, the average number of vehicles involved in an accident was between one and two vehicles, and the average number of people in a crash was between 2 and three people. Additionally, each state has had a single-vehicle accident, while some states have had a higher max number of vehicles involved in a crash (see DC).
+
+\newpage
+
+### e)
+```{r}
+fatal4<- filter(fatal1, State == "Virginia")
+fatal4<- group_by(fatal4, Month)
+sum3<- count(fatal4, name="Total Number of Accidents")
+sum3
+# count() comes from reference 2 (dplyr)
+```
+
+### f)
+```{r}
+## fatal4 is already subsetted to Virginia and grouped by months
+fatal5<-filter(fatal4, Month>5 & Month<9)
+sum4<- summarize(fatal5, mean.Vehicles=mean(Vehicle.count), median.Vehicles=median(Vehicle.count))
+sum4
+```
+\newpage
+
+### g)
+Based of the table in e, we can see the total number of accidents per month stay somewhat consistent, but the number of accidents do see to trend upwards as fall approaches (August, September, and October). From table f, we can see that the average number of vehicles involved in accidents does not vary by much during summer months, and that the majority of accidents involve 1 vehicle, as the median for all three months is 1. 
+
+
+\newpage
+## References
+1. <https://dplyr.tidyverse.org/reference/mutate.html>
+2. <https://dplyr.tidyverse.org/reference/count.html>
+3. <https://r-lang.com/how-to-combine-two-data-frames-in-r/>

@@ -1,0 +1,150 @@
+---
+title: "Homework 1" 
+author: "Noah McIntire"
+fontsize: 12pt
+geometry: margin=1in
+urlcolor: black
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, highlight=FALSE)
+```
+
+## Problem 1   
+### a)
+```{r}
+seq(to=4835,from=4751,by=7)
+## Your code goes here without the ## in front.
+# A citation of used code goes here with the # in front.
+```
+### b)
+```{r}
+rep("Night",4)
+```
+### c)
+```{r}
+seq(to=101,from=89,by=1)
+```
+
+### d)
+```{r}
+rep(21:18, c(3,3,3,3))
+```
+
+### e)
+```{r}
+seq(to=57,from=75,by=-3)
+```
+
+### f)
+```{r}
+c(seq(to=75,from=25,by=10),seq(to=50,from=70,by=-5))
+```
+
+### g)
+```{r}
+rep(seq(to=500,from=400,by=25),5:1)
+```
+
+### h)
+```{r}
+rep(3:1,5)
+```
+
+### i)
+```{r}
+c(seq(to=68,from=124,by=-8),seq(to=38,from=63,by=-5))
+```
+
+### j)
+```{r}
+rep(c("Morning","Afternoon","Night"),2)
+```
+\newpage
+## Problem 2  
+### a)
+```{r}
+dnorm(26.24, mean=63, sd=11)
+```
+ There is a .01% chance that this time is beaten in this race.
+### b)
+```{r}
+qnorm(0.05, mean=63, sd=11)
+```
+The target time for the runner should be any time under 44.9 minutes.
+### c)
+```{r}
+#29000 runners
+29000* (1-pnorm(90, mean=63, sd=11))
+```
+Around 205 runners will likely have their races disrupted by the resumption of traffic.
+
+## Problem 3
+### a)
+```{r}
+lie_1 = 1-pbinom(0,12,0.2)
+lie_1
+```
+
+### b)
+```{r}
+vect_num_lie = 0:11
+lie_new <- 1-pbinom(vect_num_lie,12,0.2)
+lie_new <- round(lie_new, 3)
+lie_new
+```
+
+### c)
+```{r}
+lie_3 = lie_new
+lie_3Matrix = rbind(vect_num_lie, lie_3)
+lie_3Matrix
+```
+The column names are confusing in this case as they are one of from the number of successes in this data set. 
+
+### d)
+```{r}
+names(lie_new) = vect_num_lie
+lie_new
+```
+
+### e)
+The presentation method in section d is much easier to read and understand what it is trying to convey, even though it is missing row names.
+
+\newpage
+### f)
+```{r}
+data_lie <- data.frame(vect_num_lie, lie_new)
+data_lie
+```
+
+### g)
+```{r}
+data_lie2 = data.frame(lie_new)
+data_lie2
+```
+
+### h)
+The data frame created in 3f is a better presentation of the data. While the number repeat, it still includes a column name that allows the viewer to interpret what it means, which is not possible with the data frame created in 3g.
+
+## Problem 4
+```{r}
+course_data = data.frame(Course1 = '"Stat 2559"', Course2 ='"Stat 3080"', row.names = "")
+Course1 <- list(5)
+Course2 <- list(75, 90, 90)
+teach_data = data.frame(Course1 = FALSE, Course2 = TRUE, row.names = "")
+myList <- list(Name = "Gretchen Martinet",
+               Department= "Statistics",
+               Courses= course_data, ActiveTeach = teach_data,
+               Enr = list(Course1 = 5, Course2 = c(75, 90, 90)), Days = list( Course1 = c("Tuesday", "Thursday"), Course2 =cbind(c("Monday", "Tuesday", "Tuesday"), c("Wednesday", "Thursday", "Thursday"))
+              
+                                                                              ))
+print(myList)
+```
+
+## References
+1. <https://stackoverflow.com/questions/24428051/removing-display-of-row-names-from-data-frame>
+2. <https://stackoverflow.com/questions/22234368/creating-a-matrix-from-multiple-column-vectors>
+3. <https://stackoverflow.com/questions/10776742/how-can-i-make-a-list-of-lists-in-r>
+

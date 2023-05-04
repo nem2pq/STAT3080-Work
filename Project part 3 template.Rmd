@@ -1,0 +1,86 @@
+---
+title: "Project Part 3" 
+fontsize: 12pt
+geometry: margin=1in
+urlcolor: black
+output: pdf_document
+header-includes:
+- \usepackage{setspace}
+- \onehalfspacing
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, highlight=FALSE)
+```
+
+```{r, echo=FALSE, warning=FALSE}
+library(ggplot2)
+library(tidyverse)
+## Use this chunk for reading in packages.
+## Use this chunk for reading in the data, combining the data, and any other major data cleaning that is not relevant to show.
+pd.read
+## Remove the ## before all code.
+```
+
+## Research Question
+Based on the primary source data found on this info, The research question most relevant would be:
+Research question here.
+
+Rubric: At least one research question is clearly stated at the beginning of the report.
+
+## Data Explanation
+Rubric: General context of the data, including the primary sources used to create the data, is given and explained well.
+
+## Data Classification
+Rubric: Whether the data are a sample or population is clearly and correctly stated.
+
+## Data Collection
+Rubric:  The collection (and, if the data are a sample, selection) methods that were used by the primary sources are given and explained in detail.
+
+## Data Contents
+Rubric: Explanation of the specifics of the data is given and clear. It is clear what the observations are and what relevant information is recorded for each.
+
+## Data Issues
+Rubric: At least one potential issue with the data is given and thoroughly explained. (for osha explain why it isnt a representative sample)
+
+## Data Appropriateness
+Rubric: Explanation of how the data described are appropriate to address the research question(s) is given and clear.
+
+## Numerical Summary Presence
+Rubric: At least one appropriate and correctly coded numerical summary that does not show counts is given.
+
+## Numerical Summary Relevance
+Rubric: The one (or more) numerical summary that does not show counts provides relevant information and can be clearly understood.
+
+## Graphical Summary Presence
+Rubric:At least one appropriate and correctly coded graphical summary that does not show counts is given.
+
+## Graphical Summary Relevance
+Rubric: The one (or more) graphical summary that does not show counts provides relevant information and can be clearly understood due to comprehensive, descriptive labels.
+
+## Conclusion
+Rubric: At least one appropriate and clearly articulated conclusion is drawn.
+
+
+Report length: Fewer than 7 pages
+
+References are cited at end and throughout the project
+
+
+
+
+### Subsection headers, if using
+Your text.
+
+Linebreaks are created using two spaces at the end of the previous line of text, or using the command \newline.  
+Pagebreaks are created using the command \newpage.  
+Note: These commands execute when knitting, moving the end-of-sentence period in the resulting PDF.
+
+```{r}
+## R code to be shown. 
+## Remove the ## before all code.
+```
+
+
+## References
+1. Your resources go here. Links should be surrounded by <>.

@@ -1,0 +1,160 @@
+---
+title: "Homework 3" 
+author: "Noah McIntire"
+fontsize: 12pt
+geometry: margin=1in
+urlcolor: black
+output: pdf_document
+---
+
+## Problem 1   
+### a)
+```{r}
+mean1<-99.5
+std1<-4.8
+sig1<-.05
+```
+
+### b)
+```{r}
+zfunc <- function(x){
+samp <- rnorm(x, mean=mean1, sd=std1)
+smean <- mean(samp)
+zTest <- (smean - mean1)/(std1/sqrt(x))
+if (abs(zTest)>1.96) {
+  return(TRUE)
+} else {
+  return(FALSE)
+}
+} 
+zfunc(27)
+```
+
+### c)
+```{r}
+repvect <- replicate(10000,zfunc(27))
+length(repvect[repvect == T])/10000
+```
+
+### d)
+Theoretically, the proportion resulting from part c should be 1 as the sample is defined as a perfect normal distribution with a mean of 99.5. This means that a z-test of a random sample of values from the normal distribution should always find 99.5 to be the true mean of the population, however with a smaller sample size it can be hard to prove with a 0.05 significance level.
+
+### e)
+```{r}
+prop <- function(x){
+vectprop<- replicate(10000,zfunc(x))
+length(vectprop[vectprop == T])/10000
+}
+prop(9)
+prop(27)
+prop(51)
+```
+
+### f)
+```{r}
+sapply(3:51, prop)
+```
+
+### g)
+Sample size does not appear to have an effect on the results of each sample size, though it should as the sample size is used within the zscore equation.
+
+\newpage
+## Problem 2
+
+### a)
+```{r}
+setwd("/Users/noahmcintire/Desktop/STAT 3080")
+nym2019<-read.table("nym2019.txt", header=TRUE)
+head(nym2019)
+```
+
+### b)
+```{r}
+vect2 <- nym2019$Time[na.rm = T]
+length(vect2)
+```
+
+### c)
+```{r}
+vect3 <- nym2019$HomeStateOrCountry[nchar(nym2019$HomeStateOrCountry) == 2]
+length(vect3)
+```
+Since all us states and territories only have two character length acronyms, this allowed me to subset the data by using nchar.
+
+### d)
+```{r}
+usrun <- length(vect3)
+vect4<-nym2019$HomeStateOrCountry[nchar(nym2019$HomeStateOrCountry) == 3]
+vect5<-replicate(usrun, "US")
+vect4<-c(vect4, vect5)
+table(vect4)
+```
+
+### e)
+```{r}
+length(unique(vect4))
+```
+
+### f)
+```{r}
+age <- nym2019$Age
+quantile(age)
+```
+The Youngest finisher was 21 and the oldest finisher was 71.
+
+\newpage
+### g)
+```{r}
+speed <- nym2019$Time
+print(quantile(speed))
+```
+
+
+```{r}
+frow<-nym2019[nym2019$Time== 130.650,]
+srow<-nym2019[nym2019$Time==251.280,]
+vect6<-c(frow$Age, srow$Age)
+vect6
+```
+The fastest finisher finished was 23 years old the the slowest finisher was 41 years old.
+
+### h)
+```{r}
+place <- nym2019$DivPlace[nym2019$DivPlace <= 20]
+length(place)
+```
+
+### i)
+
+```{r}
+top20<-nym2019[nym2019$DivPlace <= 20,]
+div<-sort(unique(top20$DIV))
+div
+```
+\newpage
+### j)
+```{r}
+top5 <- nym2019[nym2019$DivPlace <= 5,]
+top5
+```
+
+### k)
+```{r}
+notq <- nym2019[nym2019$BostonQualifier == "N",]
+yesq <- nym2019[nym2019$BostonQualifier == "Y",]
+mean(notq$Age)
+mean(yesq$Age)
+```
+
+
+\newpage
+
+
+## References
+1.<http://uc-r.github.io/na_exclude>
+
+2.<https://rdrr.io/r/base/nchar.html>
+
+3.<https://www.geeksforgeeks.org/sorting-of-arrays-in-r-programming/>
+
+

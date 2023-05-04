@@ -1,0 +1,98 @@
+---
+title: "Homework 10" 
+author: "Noah McIntire"
+fontsize: 12pt
+geometry: margin=1in
+urlcolor: black
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, highlight=FALSE)
+```
+
+## Problem 1  
+```{r}
+set.seed(07312001)
+library(ggplot2)
+library(pwr)
+pwr.t.test(d=0.5, sig.level=0.05, power=0.8, type = "one.sample",alternative="greater")$n
+```
+Based on the assumptions, the sample sized used should be 27.
+
+## Problem 2  
+### a)
+```{r}
+K = 10000
+mu1 <- 99.5
+sd1 <- 4.8
+n <- 27
+
+power <- function(x){
+  samps <- rnorm(x, mu1, sd1)
+  pVal <- t.test(samps, mu=99, altenative = "greater")$p.value
+  pVal < 0.05
+}
+emPpower <- sum(replicate(K, power(n)))/K
+emPpower
+```
+No, the practioner did not reach their goal of 80% power.
+
+### b)
+```{r}
+effectSize <- (mu1 - 99)/sd1
+effectSize
+```
+
+### c)
+```{r}
+pwr.t.test(d=effectSize, sig.level=0.05, power=0.8, type = "one.sample", alternative="greater")$n
+```
+The sample size required for 80% power is 572.
+### d)
+```{r}
+n1 = 572
+emPpower1 <- sum(replicate(K, power(n1)))/K
+emPpower1
+```
+
+
+\newpage
+
+## Problem 3 
+### a)
+```{r}
+K = 10000
+n <- 27
+# want to know if the population mean is greater than 99 (right tailed?)
+# shouldn't use a power function so idk what to do/
+powerChisq <- function(x){
+  samps <- rchisq(x, 3)
+  pVal <- t.test(samps, mu=2.75,type = "one.sample", altenative = "greater")$p.value
+  pVal < 0.05
+}
+emPpower3 <- sum(replicate(K, powerChisq(n)))/K
+emPpower3
+
+```
+No, the practioner did not reach their goal of 80% power.
+
+### b)
+```{r}
+effectSize1 <- (3 - 2.75)/2.45
+effectSize1
+```
+
+### c)
+```{r}
+pwr.t.test(d=effectSize1, sig.level=0.05, power=0.9, type = "one.sample", alternative="greater")$n
+```
+The sample size required to reach 80% power is 596.
+### d)
+```{r}
+emPpower3 <- sum(replicate(K, powerChisq(596)))/K
+emPpower3
+```
+
+## Problem 4
+By knowing what research question you want to ask, it can be very time effective to find your effect size in order to calculate the sample size needed so that you obtain the power you would like, instead of just guessing what effect size you should use as this practitioner did.
